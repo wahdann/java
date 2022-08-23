@@ -4,7 +4,7 @@ pipeline {
         stage('GIT') {
             steps {
                  git 'https://github.com/khalednoh/demo1.git'
-                 echo 'test1'
+                 echo 'master'
             }
         }
         stage('Build JAR') {
