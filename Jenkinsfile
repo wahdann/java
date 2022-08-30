@@ -1,7 +1,6 @@
 pipeline {
     agent { label 'test' }
     tools {
-        maven 'maven 1.8'
         jdk 'jdk8'
     }
     stages {
