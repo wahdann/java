@@ -1,21 +1,18 @@
 pipeline {
-    agent any
+    agent { label 'test' }
+    tools {
+        maven 'maven 1.8'
+        jdk 'jdk8'
+    }
     stages {
-        stage('GIT') {
-            steps {
-                 git 'https://github.com/khalednoh/demo1.git'
-                 echo 'master'
-            }
-        }
         stage('Build JAR') {
             steps {
-                  sh "mvn clean test package install"
+                  sh "mvn clean install"
             }
         }
         stage('Artifacts JAR') {
             steps {
                  archiveArtifacts artifacts: 'target/*.jar'
-                 archiveArtifacts artifacts: 'target/classes/com/example/*'
             }
         }
         stage('Build Image'){
@@ -30,16 +27,16 @@ pipeline {
         //
         //    }
         //}
-        stage('Publish') {
-            steps {
-               sh 'docker push hassaneid/java:${BUILD_NUMBER}'
-            }
-        }
-        stage('Deploy'){
-            steps {
-                sh """ ssh -i /home/ec2-user/eand.pem ec2-user@52.91.25.97 'sudo kubectl set image deployment java-deployment java=hassaneid/java:${BUILD_NUMBER}' """
-            } 
-        }
+       // stage('Publish') {
+         //   steps {
+           //    sh 'docker push hassaneid/java:${BUILD_NUMBER}'
+           // }
+       // }
+       // stage('Deploy'){
+         //   steps {
+           //     sh """ ssh -i /home/ec2-user/eand.pem ec2-user@52.91.25.97 'sudo kubectl set image deployment java-deployment java=hassaneid/java:${BUILD_NUMBER}' """
+           // } 
+       // }
 
     }
 }
