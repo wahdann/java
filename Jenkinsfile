@@ -4,16 +4,6 @@ pipeline {
         jdk 'jdk8'
     }
     stages {
-        stage('Test') {
-            steps {
-                  sh "mvn test"
-            }
-            post { 
-                always { 
-                    junit 'target/surefire-reports/*.xml' jacoco execPattern : 'target/jacoco.exec'
-                        }
-                 }
-        }
         stage('Build JAR') {
             steps {
                   sh "mvn clean install -DskipTests=true"
@@ -23,6 +13,17 @@ pipeline {
             steps {
                  archiveArtifacts artifacts: 'target/*.jar'
             }
+        }
+        stage('Test') {
+            steps {
+                  sh "mvn test"
+            }
+            post { 
+                always { 
+                    junit 'target/surefire-reports/*.xml'
+                    jacoco execPattern: 'target/jacoco.exec'
+                        }
+                 }
         }
         stage('Build Image'){
             steps {
