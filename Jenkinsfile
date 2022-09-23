@@ -4,7 +4,7 @@ pipeline {
         jdk 'jdk8'
     }
     stages {
-        stage('Build JAR') {
+        stage('Test') {
             steps {
                   sh "mvn test"
             }
