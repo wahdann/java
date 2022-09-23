@@ -21,7 +21,8 @@ pipeline {
         }
         stage('Build Image'){
             steps {
-                sh "docker build -t hassaneid/java:${BUILD_NUMBER} ."
+                sh "docker build -t 192.168.205.130:8081/repository/hassan/java:${BUILD_NUMBER} ."
+                sh "docker push 192.168.205.130:8081/repository/hassan/java:${BUILD_NUMBER} ."
             }
                 
         }
