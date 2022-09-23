@@ -8,10 +8,15 @@ pipeline {
             steps {
                   sh "mvn test"
             }
+            post { 
+                always { 
+                    junit 'target/surefire-reports/*.xml' jacoco execPattern : 'target/jacoco.exec'
+                        }
+                 }
         }
         stage('Build JAR') {
             steps {
-                  sh "mvn clean install"
+                  sh "mvn clean install -DskipTests=true"
             }
         }
         stage('Artifacts JAR') {
