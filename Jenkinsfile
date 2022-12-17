@@ -68,4 +68,3 @@ pipeline {
     }
 }
 
-kubectl create secret docker-registry nexus --docker-server=192.168.205.141:5000 --docker-username=admin --docker-password=123
