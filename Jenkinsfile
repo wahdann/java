@@ -47,18 +47,13 @@ pipeline {
                 script {
 
                     sh """
-                    if [ -d enviroment-repo-argocd ]; then
-                    git clone \
-                    --depth 1 \
-                    --filter=blob:none \
-                    --no-checkout \
-                    https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git \
-                    ;
-                    cd enviroment-repo-argocd
-                    git checkout main -- java
-                    else; 
-                    cd enviroment-repo-argocd
-                    git checkout main -- java
+                    if [ -d "./enviroment-repo-argocd" ]; then
+                    git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git &&
+                    cd enviroment-repo-argocd &&
+                    git checkout main -- java;
+                    else
+                    cd enviroment-repo-argocd &&
+                    git checkout main -- java;
                     fi;
                     cat ./java/deployment.yaml
                     sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
@@ -72,3 +67,5 @@ pipeline {
         }
     }
 }
+
+kubectl create secret docker-registry nexus --docker-server=192.168.205.141:5000 --docker-username=admin --docker-password=123
