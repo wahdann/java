@@ -48,10 +48,10 @@ pipeline {
 
                     sh """
                     if [ -d "./enviroment-repo-argocd" ]; then
-                    git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git &&
                     cd enviroment-repo-argocd &&
                     git checkout main -- java;
                     else
+                    git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git &&
                     cd enviroment-repo-argocd &&
                     git checkout main -- java;
                     fi;
@@ -67,4 +67,3 @@ pipeline {
         }
     }
 }
-
