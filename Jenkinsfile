@@ -56,11 +56,13 @@ pipeline {
                     git checkout main -- java;
                     fi;
                     cat ./java/deployment.yaml
-                    sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
+                    sed -i 's|192.168.205.141:5000/repository/app/java:.*|192.168.205.141:5000/repository/app/java:${BUILD_NUMBER}|g' ./java/deployment.yaml
                     cat ./java/deployment.yaml
+                    git config user.email hassaneid339@gmail.com
+                    git config user.name Hassan-Eid-Hassan
                     git add .
                     git commit -m 'Done by Jenkins Job changemanifest by user : ${env.BUILD_USER}'
-                    git push https://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@github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git HEAD:main
+                    git push https://Hassan-Eid-Hassan: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@github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git HEAD:main
                     """
                 }
             }
