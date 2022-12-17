@@ -47,6 +47,7 @@ pipeline {
                 script {
 
                     sh """
+                    if [ -d enviroment-repo-argocd ]; then
                     git clone \
                     --depth 1 \
                     --filter=blob:none \
@@ -55,6 +56,10 @@ pipeline {
                     ;
                     cd enviroment-repo-argocd
                     git checkout main -- java
+                    else; 
+                    cd enviroment-repo-argocd
+                    git checkout main -- java
+                    fi;
                     cat ./java/deployment.yaml
                     sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
                     cat ./java/deployment.yaml
