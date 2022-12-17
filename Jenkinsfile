@@ -54,7 +54,7 @@ pipeline {
                     https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git \
                     ;
                     cd enviroment-repo-argocd
-                    git checkout master -- java
+                    git checkout main -- java
                     cat ./java/deployment.yaml
                     sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
                     cat ./java/deployment.yaml
