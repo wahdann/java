@@ -49,7 +49,7 @@ pipeline {
                     sh """
                     git clone https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git ./java
                     cat ./java/deployment.yaml
-                    sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
+                    sed -i 's|192.168.205.141:5000/repository/app/java:.*|192.168.205.141:5000/repository/app/java:${BUILD_NUMBER}|g' ./java/deployment.yaml
                     cat ./java/deployment.yaml
                     git add .
                     git commit -m 'Done by Jenkins Job changemanifest by user : ${env.BUILD_USER}'
