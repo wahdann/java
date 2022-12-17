@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     stages {
-        
+
         stage('Build JAR') {
             steps {
                   sh "mvn clean install -DskipTests=true"
@@ -47,9 +47,15 @@ pipeline {
                 script {
 
                     sh """
-                    git clone https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git ./java
+                    git clone \
+                    --depth 1 \
+                    --filter=blob:none \
+                    --no-checkout \
+                    https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git \;
+                    cd enviroment-repo-argocd
+                    git checkout master -- java
                     cat ./java/deployment.yaml
-                    sed -i 's|192.168.205.141:5000/repository/app/java:.*|192.168.205.141:5000/repository/app/java:${BUILD_NUMBER}|g' ./java/deployment.yaml
+                    sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
                     cat ./java/deployment.yaml
                     git add .
                     git commit -m 'Done by Jenkins Job changemanifest by user : ${env.BUILD_USER}'
