@@ -25,6 +25,7 @@ pipeline {
         stage('Build Image'){
             steps {
                 sh "docker build -t 192.168.205.141:5000/repository/app/java:${BUILD_NUMBER} ."
+                sh "docker login -u admin -p 123 192.168.205.141:5000"
                 sh "docker push 192.168.205.141:5000/repository/app/java:${BUILD_NUMBER}"
             }
         }
