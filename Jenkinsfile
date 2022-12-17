@@ -46,7 +46,7 @@ pipeline {
             steps{
                 script {
                     wrap([$class: 'BuildUser']) {
-                        def env.user = env.BUILD_USER
+                        env.user = env.BUILD_USER
                     }
                     sh """
                     if [ -d "./enviroment-repo-argocd" ]; then
