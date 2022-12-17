@@ -49,18 +49,18 @@
 					<version>0.8.5</version>
 					<executions> 
 					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-						</execution>
-						<execution>
-							<id>report</id> 
-							<phase>test</phase>
-							<goal>report</goal> 
-							<goals> 
-						</goals>
-						</execution> 
-					</executions> 
+					 <goals>
+					  <goal>prepare-agent</goal>
+					 </goals>
+					</execution>
+					<execution>
+					 <goals>
+					  <id>report</id> 
+					  <phase>test</phase>
+					  <goal>report</goal>
+					 </goals>
+					</execution> 
+				</executions> 
 			</plugin>
 		</plugins>
 	</build>
