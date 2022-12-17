@@ -1,6 +1,9 @@
 pipeline {
+
     agent any
+
     stages {
+        
         stage('Build JAR') {
             steps {
                   sh "mvn clean install -DskipTests=true"
@@ -25,7 +28,6 @@ pipeline {
         stage('Build Image'){
             steps {
                 sh "docker build -t 192.168.205.141:5000/repository/app/java:${BUILD_NUMBER} ."
-                sh "docker login -u admin -p 123 192.168.205.141:5000"
                 sh "docker push 192.168.205.141:5000/repository/app/java:${BUILD_NUMBER}"
             }
         }
@@ -35,10 +37,26 @@ pipeline {
         
         //    }
         // }
-    //    stage('Deploy'){
-    //        steps {
-    //            sh """ ssh -i /home/ec2-user/eand.pem ec2-user@52.91.25.97 'sudo kubectl set image deployment java-deployment java=hassaneid/java:${BUILD_NUMBER}' """
-    //        } 
-    //    }
+        // stage('Deploy'){
+        //     steps {
+        //         sh """ ssh -i /home/ec2-user/eand.pem ec2-user@52.91.25.97 'sudo kubectl set image deployment java-deployment java=hassaneid/java:${BUILD_NUMBER}' """
+        //     } 
+        // }
+        stage('Update GIT'){ 
+            steps{
+                script {
+
+                    sh """
+                    git clone https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git ./java
+                    cat ./java/deployment.yaml
+                    sed -i 's|REPLACE|${BUILD_NUMBER}|g' ./java/deployment.yaml
+                    cat ./java/deployment.yaml
+                    git add .
+                    git commit -m 'Done by Jenkins Job changemanifest by user : ${env.BUILD_USER}'
+                    git push https://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@github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git HEAD:main
+                    """
+                }
+            }
+        }
     }
 }
