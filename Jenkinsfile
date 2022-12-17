@@ -65,7 +65,7 @@ pipeline {
                     git config user.name Hassan-Eid-Hassan
                     git add java/deployment.yaml
                     git commit -m 'Done by Jenkins Job changemanifest by user : ${env.user}' java/deployment.yaml
-                    git push HEAD
+                    git push origin HEAD
                     """
                 }
             }
