@@ -51,7 +51,8 @@ pipeline {
                     --depth 1 \
                     --filter=blob:none \
                     --no-checkout \
-                    https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git \;
+                    https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git \
+                    ;
                     cd enviroment-repo-argocd
                     git checkout master -- java
                     cat ./java/deployment.yaml
