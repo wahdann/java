@@ -46,7 +46,7 @@ pipeline {
             steps{
                 script {
                     wrap([$class: 'BuildUser']) {
-                        env.user = env.BUILD_USER
+                        def env.user = env.BUILD_USER
                     }
                     sh """
                     if [ -d "./enviroment-repo-argocd" ]; then
@@ -54,7 +54,7 @@ pipeline {
                     git checkout HEAD ./java &&
                     git pull origin HEAD;
                     else
-                    git clone --depth 1 --filter=blob:none --no-checkout https://github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git &&
+                    git clone --depth 1 --filter=blob:none --no-checkout git@github.com:Hassan-Eid-Hassan/enviroment-repo-argocd.git &&
                     cd enviroment-repo-argocd &&
                     git checkout HEAD ./java;
                     fi;
@@ -65,7 +65,7 @@ pipeline {
                     git config user.name Hassan-Eid-Hassan
                     git add java/deployment.yaml
                     git commit -m 'Done by Jenkins Job changemanifest by user : ${env.user}' java/deployment.yaml
-                    git push https://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@github.com/Hassan-Eid-Hassan/enviroment-repo-argocd.git HEAD
+                    git push HEAD
                     """
                 }
             }
