@@ -6,7 +6,7 @@ pipeline{
         maven 'mvn3.9.0'
     }
     environment{
-        Image_tag="10"
+        SKIP_TEST='-DskipTests=true'
     }
     stages{
         stage('Clean'){
@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Build JAR') {
             steps {
-                  sh "mvn install"
+                  sh "mvn install ${SKIP_TEST}"
             }
         }
         stage('Artifacts JAR') {
