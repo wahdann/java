@@ -3,16 +3,26 @@ pipeline{
         label 'agent0'
     }
     tools{
-        maven 'mvn3.8.1'
+        maven 'mvn3.9.0'
     }
     environment{
         Image_tag="10"
     }
     stages{
-        stage('maven version'){
+        stage('Clean'){
             steps{
-                sh "mvn -v"
+                sh "mvn clean"
             }
         }
+        stage('Build JAR') {
+            steps {
+                  sh "mvn install"
+            }
+        }
+        // stage('Artifacts JAR') {
+        //     steps {
+        //          archiveArtifacts artifacts: 'target/*.jar'
+        //     }
+        // }
     }
 }
