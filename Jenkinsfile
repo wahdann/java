@@ -16,13 +16,13 @@ pipeline{
         }
         stage('Build JAR') {
             steps {
-                  sh "mvn install"
+                  sh "mvn install -s setting.xml"
             }
         }
-        // stage('Artifacts JAR') {
-        //     steps {
-        //          archiveArtifacts artifacts: 'target/*.jar'
-        //     }
-        // }
+        stage('Artifacts JAR') {
+            steps {
+                 archiveArtifacts artifacts: 'target/*.jar'
+            }
+        }
     }
 }
