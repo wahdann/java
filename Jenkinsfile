@@ -29,7 +29,7 @@ pipeline{
         stage('Upload JAR to Nexus') {
             steps {
                 sh """
-                curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${WORKSPACE}/target/*.jar http://192.168.205.141:8081/repository/demo/demo1-0.0.1-SNAPSHOT.jar
+                curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${WORKSPACE}/target/*.jar http://192.168.205.141:8081/repository/demo-test/test/demo1-0.0.1-SNAPSHOT.jar
                 """
             }
         }
