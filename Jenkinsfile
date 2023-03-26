@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Build JAR') {
             steps {
-                  sh "mvn install -s setting.xml"
+                  sh "mvn install"
             }
         }
         stage('Artifacts JAR') {
