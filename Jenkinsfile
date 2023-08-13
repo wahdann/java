@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'agent0'
+        label 'agent-01-maven'
     }
     tools{
         maven 'mvn3.9.0'
@@ -26,12 +26,12 @@ pipeline{
                  archiveArtifacts artifacts: 'target/*.jar'
             }
         }
-        stage('Upload JAR to Nexus') {
-            steps {
-                sh """
-                curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${WORKSPACE}/target/*.jar http://192.168.205.141:8081/repository/demo-test/test/demo1-0.0.1-SNAPSHOT.jar
-                """
-            }
-        }
+        // stage('Upload JAR to Nexus') {
+        //     steps {
+        //         sh """
+        //         curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${WORKSPACE}/target/*.jar http://192.168.205.141:8081/repository/demo-test/test/demo1-0.0.1-SNAPSHOT.jar
+        //         """
+        //     }
+        // }
     }
 }
