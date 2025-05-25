@@ -6,17 +6,17 @@ pipeline{
     stages{
         stage("Build java app"){
             steps{
-                sh 'echo "start building java app"'
+                sh 'mvn clean package install'
             }
         }
         stage("Test java app"){
             steps{
-                sh 'echo "Test java app"'
+                sh 'mvn test'
             }
         }
         stage("build java app image"){
             steps{
-                sh 'echo "build java app image"'
+                sh 'docker build -t java:v1 .'
             }
         }
     }
