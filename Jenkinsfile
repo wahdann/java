@@ -7,6 +7,11 @@ pipeline{
         jdk "java-8"
     }
 
+    environment{
+        DOCKER_USER = credentials('dockerhub-user')
+        DOCKER_PASS = credentials('dockerhub-password')
+    }
+
     parameters {
         string defaultValue: '${BUILD_NUMBER}', description: 'Enter the version of the docker image', name: 'VERSION'
         choice choices: ['true', 'false'], description: 'Skip test', name: 'TEST'
@@ -20,6 +25,7 @@ pipeline{
         }
         stage("build java app image"){
             steps{
+                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} "
                 sh "docker build -t java:v${VERSION} ."
             }
         }
