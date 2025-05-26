@@ -20,7 +20,14 @@ pipeline{
     stages{
         stage("Build java app"){
             steps{
-                sh "mvn clean package install -Dmaven.test.skip=${TEST}"
+                parallel(
+                    createFile: {
+                        sh "touch ABCD"
+                    },
+                    buildJar:{
+                        sh "mvn clean package install -Dmaven.test.skip=${TEST}"
+                    }
+                )
             }
         }
         stage("build java app image"){
