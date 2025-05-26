@@ -1,3 +1,5 @@
+@Library('libx')_
+
 pipeline{
     agent {
         label 'agent-0'
