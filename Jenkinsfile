@@ -22,7 +22,7 @@ pipeline{
             steps{
                 parallel(
                     createFile: {
-                        sh "touch ABCD"
+                        sh "touch ${VERSION}"
                     },
                     buildJar:{
                         sh "mvn clean package install -Dmaven.test.skip=${TEST}"
@@ -32,8 +32,20 @@ pipeline{
         }
         stage("build java app image"){
             steps{
+                script{
+                    def dockerx = new org.iti.docker()
+                    dockerx.build("java", "${VERSION}")
+                }
                 sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} "
-                sh "docker build -t java:v${VERSION} ."
+            }
+        }
+        stage("push java app image"){
+            steps{
+                script{
+                    def dockerx = new org.iti.docker()
+                    dockerx.login("${DOCKER_USER}", "${DOCKER_PASS}")
+                    dockerx.push("${DOCKER_USER}", "${DOCKER_PASS}")
+                }
             }
         }
     }
