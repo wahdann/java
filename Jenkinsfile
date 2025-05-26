@@ -30,5 +30,14 @@ pipeline{
             }
         }
     }
-    
+
+    post{
+        always{
+            sh "echo 'Clean the Workspace'"
+            cleanWs()
+        }
+        failure {
+            sh "echo 'failed'"
+        }
+    }
 }
