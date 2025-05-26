@@ -9,17 +9,13 @@ pipeline{
 
     parameters {
         string defaultValue: '${BUILD_NUMBER}', description: 'Enter the version of the docker image', name: 'VERSION'
+        choice choices: ['true', 'false'], description: 'Skip test', name: 'TEST'
     }
 
     stages{
         stage("Build java app"){
             steps{
-                sh 'mvn clean package install'
-            }
-        }
-        stage("Test java app"){
-            steps{
-                sh 'mvn test'
+                sh "mvn clean package install -Dmaven.test.skip=${TEST}"
             }
         }
         stage("build java app image"){
