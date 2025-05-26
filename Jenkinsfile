@@ -24,13 +24,14 @@ pipeline{
             steps{
                 script{
                     def VM_IP = vmIp()
+                    sh "echo ${VM_IP}"
                 }
             }
         }
         stage("Build java app"){
             steps{
                 script{
-                    sayHello("ITI")
+                    sayHello "ITI"
                 }
                 sh "mvn clean package install -Dmaven.test.skip=${TEST}"
             }
