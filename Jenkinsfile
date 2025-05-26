@@ -20,19 +20,19 @@ pipeline{
     }
 
     stages{
+        stage("VM info"){
+            steps{
+                script{
+                    def VM_IP = vmIp()
+                }
+            }
+        }
         stage("Build java app"){
             steps{
                 script{
                     sayHello("ITI")
                 }
-                parallel(
-                    createFile: {
-                        sh "touch ${VERSION}"
-                    },
-                    buildJar:{
-                        sh "mvn clean package install -Dmaven.test.skip=${TEST}"
-                    }
-                )
+                sh "mvn clean package install -Dmaven.test.skip=${TEST}"
             }
         }
         stage("build java app image"){
