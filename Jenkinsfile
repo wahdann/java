@@ -18,22 +18,24 @@ pipeline{
     }
 
     stages{
-        stage("Build java app"){
-            steps{
-                parallel(
-                    createFile: {
-                        sh "touch ABCD"
-                    },
-                    buildJar:{
-                        sh "mvn clean package install -Dmaven.test.skip=${TEST}"
-                    }
-                )
+        parallel{
+            stage("Build java app"){
+                steps{
+                    // parallel(
+                    //     createFile: {
+                    //         sh "touch ABCD"
+                    //     },
+                    //     buildJar:{
+                            sh "mvn clean package install -Dmaven.test.skip=${TEST}"
+                    //     }
+                    // )
+                }
             }
-        }
-        stage("build java app image"){
-            steps{
-                sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} "
-                sh "docker build -t java:v${VERSION} ."
+            stage("build java app image"){
+                steps{
+                    sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} "
+                    sh "docker build -t java:v${VERSION} ."
+                }
             }
         }
     }
