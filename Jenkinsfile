@@ -2,11 +2,7 @@
 
 pipeline{
     agent {
-        label 'agent-0'
-    }
-
-    tools{
-        jdk "java-8"
+        label 'newAgent'
     }
 
     environment{
@@ -20,20 +16,10 @@ pipeline{
     }
 
     stages{
-        stage("VM info"){
-            steps{
-                script{
-                    def VM_IP = vmIp()
-                    sh "echo ${VM_IP}"
-                }
-            }
-        }
+        
         stage("Build java app"){
             steps{
-                script{
-                    sayHello "ITI"
-                }
-                sh "mvn clean package install -Dmaven.test.skip=${TEST}"
+                sh "mvn clean package install"
             }
         }
         stage("build java app image"){
@@ -50,19 +36,10 @@ pipeline{
                 script{
                     def dockerx = new org.iti.docker()
                     dockerx.login("${DOCKER_USER}", "${DOCKER_PASS}")
-                    dockerx.push("${DOCKER_USER}", "${DOCKER_PASS}")
+                    dockerx.push("java","${DOCKER_USER}", "${VERSION}")
                 }
             }
         }
     }
 
-    post{
-        always{
-            sh "echo 'Clean the Workspace'"
-            cleanWs()
-        }
-        failure {
-            sh "echo 'failed'"
-        }
-    }
 }
