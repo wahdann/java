@@ -7,8 +7,8 @@ pipeline{
         jdk "java-8"
     }
 
-    environment {
-        JAVA_HOME = "/home/jenkins/tools/hudson.model.JDK/java-8/openlogic-openjdk-8u442-b06-linux-x64"
+    parameters {
+        string defaultValue: '${BUILD_NUMBER}', description: 'Enter the version of the docker image', name: 'VERSION'
     }
 
     stages{
@@ -24,7 +24,7 @@ pipeline{
         }
         stage("build java app image"){
             steps{
-                sh 'docker build -t java:v1 .'
+                sh "docker build -t java:v${VERSION} ."
             }
         }
     }
