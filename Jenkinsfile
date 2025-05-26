@@ -22,14 +22,14 @@ pipeline{
             parallel{
                 stage("Build java app"){
                     steps{
-                        // parallel(
-                        //     createFile: {
-                        //         sh "touch ABCD"
-                        //     },
-                        //     buildJar:{
+                        parallel(
+                            createFile: {
+                                sh "touch ABCD"
+                            },
+                            buildJar:{
                                 sh "mvn clean package install -Dmaven.test.skip=${TEST}"
-                        //     }
-                        // )
+                            }
+                        )
                     }
                 }
                 stage("build java app image"){
