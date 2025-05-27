@@ -1,5 +1,5 @@
 @Library('libx@main')_
-call_java()
+forjava()
 // @Library('libx')_
 
 // pipeline{
